@@ -1,6 +1,8 @@
 #include "MipsClient.h"
 #include "InvalidScan.h"
+#include "MipsDFA.h"
 #include <iomanip>
+#include <fstream>
 
 MipsClient::MipsClient() {
     registers[30] = -1;
@@ -12,32 +14,50 @@ void MipsClient::incrementPC() { programCounter += 4; }
 
 void MipsClient::setPC(int64_t newPC) { programCounter = newPC; }
 
-void MipsClient::setHi(int32_t val) {hi = val;}
-void MipsClient::setLo(int32_t val) {lo = val;}
+void MipsClient::setHi(int64_t val) {hi = val;}
+void MipsClient::setLo(int64_t val) {lo = val;}
 
-int32_t MipsClient::getHi() const {return hi;}
-int32_t MipsClient::getLo() const {return lo;}
+int64_t MipsClient::getHi() const {return hi;}
+int64_t MipsClient::getLo() const {return lo;}
 
-void MipsClient::setRegister(int reg, int32_t val) {
+void MipsClient::setRegister(int reg, int64_t val) {
     if (reg == CONST_REGISTER) return;
     registers[reg - 1] = val;
 }
 
-int32_t MipsClient::getRegister(int reg) const {
+int64_t MipsClient::getRegister(int reg) const {
     if (reg < 1 || reg > NUM_REGISTERS) throw InvalidScan("Register out of bounds: $" + to_string(reg));
     return registers[reg - 1];
 }
 
-int32_t MipsClient::getMemory(uint32_t address) const {
+int64_t MipsClient::getMemory(int64_t address) const {
     if (address % 4 != 0) throw InvalidScan("Unaligned memory access at: " + to_string(address));
 
     return memory[address / 4];
 }
 
-void MipsClient::setMemory(uint32_t address, int32_t val) {
+void MipsClient::setMemory(int64_t address, int64_t val) {
     if (address % 4 != 0) throw InvalidScan("Unaligned memory access at: " + to_string(address));
     memory[address / 4] = val;
 } 
+
+void MipsClient::configure(string file) {
+    ifstream myfile;
+    myfile.open(file);
+    string line;
+
+    while(getline(myfile, line)) {
+        vector<Token> tokens = MipsDFA::tokenize(line);
+
+        if (tokens.at(0).getValue() == "r") {
+            setRegister(tokens.at(1).valAsNumber(), tokens.at(3).valAsNumber());
+        } else if (tokens.at(0).getValue() == "m") {
+            setMemory(tokens.at(1).valAsNumber(), tokens.at(3).valAsNumber());
+        } else {
+            throw InvalidScan("Invalid configuration.\n-     " + line);
+        }
+    }
+}
 
 ostream& operator<<(ostream& os, const MipsClient& client) {
     cout << "--------------------" << endl << "MIPS EMULATOR" << endl << "--------------------" << endl;

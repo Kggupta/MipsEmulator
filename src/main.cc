@@ -11,10 +11,11 @@
 using namespace std;
 
 
-int main() {
+int main(int argc, char* argv[]) {
     string line;
     LabelTable table;
     MipsClient client;
+    if (argc == 2) client.configure(argv[1]);
     CommandFactory factory;
     vector<Command *> commands;
     try {

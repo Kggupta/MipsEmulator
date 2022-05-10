@@ -3,8 +3,8 @@
 using std::pair;
 
 
-void LabelTable::addLabel(string name, uint64_t line) {
-    labels.insert(pair<string, uint64_t>(name, line));
+void LabelTable::addLabel(string name, int64_t line) {
+    labels.insert(pair<string, int64_t>(name, line));
 } 
 
 
@@ -13,7 +13,7 @@ bool LabelTable::labelExists(string name) const {
 }
 
 
-uint64_t LabelTable::getLine(string name) const {
+int64_t LabelTable::getLine(string name) const {
     return labels.at(name);
 }
 

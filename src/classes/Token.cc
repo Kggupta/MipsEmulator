@@ -16,6 +16,7 @@ int64_t Token::valAsNumber() const {
         ss.str(value);
         break;
     case HEXINT:
+        ss.str(value);
         ss >> std::hex;
         break;
     case REGISTER:
@@ -25,5 +26,6 @@ int64_t Token::valAsNumber() const {
         return 0;
     }
     ss >> res;
+
     return res;
 }

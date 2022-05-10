@@ -33,9 +33,9 @@ Below are all the commands that this emulator supports. You can easily add more 
 | lw      | lw $s, i($t)   | $s = M[i + $t]               |
 | sw      | sw $s, i($t)   | M[i + $t] = $s               |
 | slt     | slt $d, $s, $t | if $s < $t then $d = 1       |
+| pri     | slt $d         | print $d to stdout           |
+| mem     | slt i          | print M\[i\] to stdout       |
 
-pri $s - debug command to print $s to output
-mem i - debug command to print memory at address i (hex)
 
 ## Compiling / Running
 

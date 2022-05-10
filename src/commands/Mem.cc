@@ -4,11 +4,9 @@
 #include <iostream>
 using namespace std;
 
-const vector<Token::Type> MEM_PATTERN = {Token::Type::ID, Token::Type::HEXINT};
-
 void Mem::run(MipsClient & client, const LabelTable & table) const {
     int64_t s = client.getMemory(tokens.at(1).valAsNumber());
-    cout << tokens.at(1).valAsNumber() << ": " << "0x" << hex << std::setw(8) << std::setfill('0') << s << endl;
+    cout << dec << tokens.at(1).valAsNumber() << ": " << "0x" << hex << std::setw(8) << std::setfill('0') << s << endl;
 }
 
 Mem::Mem(vector<Token> tokens): tokens{tokens} {}

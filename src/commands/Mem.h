@@ -4,6 +4,8 @@
 #include <vector>
 using namespace std;
 
+const vector<Token::Type> MEM_PATTERN = {Token::Type::ID, Token::Type::HEXINT};
+
 class Mem: public Command {
     vector<Token> tokens;
 

@@ -10,8 +10,8 @@ using std::map;
 using std::string;
 
 class LabelTable {
-    map<string, uint64_t> labels;
-    uint64_t lineNumber = 0;
+    map<string, int64_t> labels;
+    int64_t lineNumber = 0;
 
     /**
      * @brief Adds a label to the table along with the address line
@@ -19,7 +19,7 @@ class LabelTable {
      * @param name Label name
      * @param line Address to line
      */
-    void addLabel(string name, uint64_t line);
+    void addLabel(string name, int64_t line);
 
     public:
     /**
@@ -35,9 +35,9 @@ class LabelTable {
      * @brief Gets the address location of a label name (label must exist in table)
      * 
      * @param name Label name
-     * @return uint64_t
+     * @return int64_t
      */
-    uint64_t getLine(string label) const;
+    int64_t getLine(string label) const;
     
     /**
      * @brief Populates the label table using the given tokenized assembly instruction

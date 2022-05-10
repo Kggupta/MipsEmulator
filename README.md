@@ -39,7 +39,9 @@ mem i - debug command to print memory at address i (hex)
 
 ## Compiling / Running
 
-Compile the program with `make`. Run it using `./emulator < [yourmipsfile]`.
+Compile the program with `make`. Run it using `./emulator [initialconfig] < [yourmipsfile]`.
+
+The initial configuration file is an optional argument and simply initializes the registers and memory slots that you specify. An example is included in `/examples`.
 
 ## Next Steps
 
